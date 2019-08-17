@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+    <title>
+        Accounts Maker
+    </title>    
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+    <script>
+
+      $(document).ready(function(){
+          $("#2").hide();
+          $("#del").hide();
+
+//create account button
+
+          $("#crt").click(function(){
+            $("#2").show();
+            $("#del").show();
+            $.ajax({
+                type: "POST",
+                url: "create.php",
+                data: {code: $("#Code").val()},
+                success: function(result,status,xhr)
+                {
+                   $("#msg").html(result);
+                },
+                error: function(xhr,status)
+                {
+                    $("#msg").html(error);
+                }
+            })
+          return false;});
+
+//delete account button
+
+          $("#del").click(function(){
+            $("#2").hide();
+          $("#del").hide();
+            $.ajax({
+                type: "POST",
+                url: "delete.php",
+                data: {code: $("#Code").val()},
+                success: function(result,status,xhr)
+                {
+                   $("#msg").html(result);
+                },
+                error: function(xhr,status)
+                {
+                    $("#msg").html(error);
+                }
+            })
+          return false;});
+
+//generate balance of trial button
+
+          $("#gen").click(function(){
+            $.ajax({
+                type: "POST",
+                url: "tri_bal.php",
+                data: {code: $("#gen").val()},
+                success: function(result,status,xhr)
+                {
+                   $("#msg").html(result);
+                },
+                error: function(xhr,status)
+                {
+                    $("#msg").html(error);
+                }
+            })
+          return false;});
+
+          //adding values to debit side
+
+          $("#add1").click(function(){
+            $.ajax({
+                type: "POST",
+                url: "add_deb.php",
+                data: {code: $("#gen").val(), date: $("#ddate").val(), num: $("#dno").val(), narrd: $("#dnar").val(), amdr: $("#dra").val() },
+                success: function(result,status,xhr)
+                {
+                   $("#msg").html(result);
+                },
+                error: function(xhr,status)
+                {
+                    $("#msg").html(error);
+                }
+            })
+          return false;});
+
+          //adding values to credit side
+
+          $("#add2").click(function(){
+            $.ajax({
+                type: "POST",
+                url: "add_crd.php",
+                data: {code: $("#gen").val(), date: $("#cdate").val(), num: $("#cno").val(), narrd: $("#cnar").val(), amdr: $("#cra").val() },
+                success: function(result,status,xhr)
+                {
+                   $("#msg").html(result);
+                },
+                error: function(xhr,status)
+                {
+                    $("#msg").html(error);
+                }
+            })
+          return false;});
+
+          return false; });
+    
+
+    </script>
+
+    </head>
+
+    <body style="background-image: url('bus.jpg'); background-size: cover ">
+        <div class="container">
+            <div class="header" id="sd">
+                <h1>Transcations Account Maker</h1>
+                <h3>Fill the form below according to your account.</h3>
+            </div>
+        
+        <br><br><br>
+        <div class="center">
+        
+        <form id="1" name="Account">
+        <b>Account Name:</b>    
+         <input type="text" placeholder="Account Name" name="Name"></input>
+         &nbsp; &nbsp;
+        <b>Account Code:</b> 
+         <input id="Code" type="text" placeholder="Account Code"></input>
+             <br><br>
+             <input type="submit" value="Create Account" id="crt"></input>&nbsp; &nbsp;
+             <input type="submit" value="Delete" id="del"></input>
+             <br><br>
+             <p id="msg"> </p>
+        </form>
+             <br><br><br>
+        <form id="2" name="Account2">     
+         <div class="row" id="updt">
+         <div class="column">
+         <h3> Debit Side </h3>
+         <br><br>
+          <input type="text" placeholder="Date" id="ddate"></input>&nbsp; &nbsp; &nbsp;
+          <input type="text" placeholder="No." id="dno"></input>&nbsp; &nbsp; &nbsp;
+          <input type="text" placeholder="Narration" id="dnar"></input>&nbsp; &nbsp; &nbsp;
+          <input type="text" placeholder="Dr. Amount" id="dra"></input>
+          <br><br><br>
+          <input type="submit" value="Add" id="add1"></input>
+         </div>
+          <br><br>
+         <div class="column">
+           <h3> Credit Side</h3>
+           <br><br>
+          <input type="text" placeholder="Date" id="cdate"></input>&nbsp; &nbsp; &nbsp;
+          <input type="text" placeholder="No." id="cno"></input>&nbsp; &nbsp; &nbsp;
+          <input type="text" placeholder="Narration" id="cnar"></input>&nbsp; &nbsp; &nbsp;
+          <input type="text" placeholder="Cr. Amount" id="cra"></input>
+          <br><br><br>
+          <input type="submit" value="Add" id="add2"></input>
+
+         </div>
+         </div>
+         <br><br>
+         <input type="submit" value="Generate Trial Balance" id="gen"></input>
+        </form>
+        <br><br><br><br>
+        </div>   
+
+    </body>
+</html>
